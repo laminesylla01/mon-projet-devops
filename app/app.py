@@ -3,7 +3,7 @@ from flask import Flask
 app = Flask(__name__)
 
 # Change ce numéro pour tester le déploiement automatique
-VERSION = "1"
+VERSION = "2"
 
 
 @app.route("/")
