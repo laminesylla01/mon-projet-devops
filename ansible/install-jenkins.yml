@@ -1,0 +1,43 @@
+- name: Installer Jenkins
+  hosts: jenkins
+  tasks:
+
+    - name: Installer Java 21 (nécessaire pour Jenkins)
+      apt:
+        name: [openjdk-21-jre-headless, fontconfig]
+        update_cache: yes
+
+    - name: Télécharger la clé du dépôt Jenkins
+      get_url:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+        dest: /etc/apt/keyrings/jenkins-keyring.asc
+
+    - name: Ajouter le dépôt Jenkins
+      copy:
+        dest: /etc/apt/sources.list.d/jenkins.list
+        content: "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/\n"
+
+    - name: Installer Jenkins
+      apt:
+        name: jenkins
+        update_cache: yes
+
+    - name: Forcer Java à utiliser l'IPv4
+      copy:
+        dest: /etc/systemd/system/jenkins.service.d/override.conf
+        content: |
+          [Service]
+          Environment="JAVA_OPTS=-Djava.awt.headless=true -Djava.net.preferIPv4Stack=true"
+
+    - name: Autoriser Jenkins à utiliser Docker
+      user:
+        name: jenkins
+        groups: docker
+        append: yes
+
+    - name: Démarrer Jenkins
+      systemd:
+        name: jenkins
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
