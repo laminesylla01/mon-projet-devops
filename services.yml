@@ -1,0 +1,85 @@
+# Liste des machines du homelab affichées sur le tableau de bord.
+# Pour ajouter une machine : copier un bloc, l'adapter, puis git push.
+#
+#   nom    : nom affiché
+#   role   : petite description
+#   groupe : catégorie (les tuiles sont regroupées par groupe)
+#   hote   : adresse IP
+#   port   : port testé (22 = SSH, 8006 = Proxmox, 1521 = Oracle...)
+#   lien   : (facultatif) adresse ouverte au clic sur la tuile
+
+# ---------- Infrastructure ----------
+- nom: pve1
+  role: Hyperviseur Proxmox
+  groupe: Infrastructure
+  hote: 192.168.1.70
+  port: 8006
+  lien: https://192.168.1.70:8006
+
+- nom: pve2
+  role: Hyperviseur Proxmox
+  groupe: Infrastructure
+  hote: 192.168.1.50
+  port: 8006
+  lien: https://192.168.1.50:8006
+
+- nom: pve3
+  role: Hyperviseur Proxmox
+  groupe: Infrastructure
+  hote: 192.168.1.20
+  port: 8006
+  lien: https://192.168.1.20:8006
+
+- nom: nasprod30
+  role: Stockage NAS
+  groupe: Infrastructure
+  hote: 192.168.1.25
+  port: 445
+
+# ---------- Services ----------
+- nom: frprod10
+  role: Base Oracle (listener)
+  groupe: Services
+  hote: 192.168.1.30
+  port: 1521
+
+- nom: debprod20
+  role: VPN
+  groupe: Services
+  hote: 192.168.1.35
+  port: 22
+
+- nom: debprod40
+  role: Serveur web
+  groupe: Services
+  hote: 192.168.1.40
+  port: 80
+  lien: http://192.168.1.40
+
+# ---------- DevOps ----------
+- nom: debprod10
+  role: Ansible · Terraform
+  groupe: DevOps
+  hote: 192.168.1.45
+  port: 22
+
+- nom: debjenk01
+  role: Jenkins
+  groupe: DevOps
+  hote: 192.168.1.83
+  port: 8080
+  lien: http://192.168.1.83:8080
+
+- nom: debtest01
+  role: Recette
+  groupe: DevOps
+  hote: 192.168.1.93
+  port: 5000
+  lien: http://192.168.1.93:5000
+
+- nom: debdock01
+  role: Production
+  groupe: DevOps
+  hote: 192.168.1.73
+  port: 5000
+  lien: http://192.168.1.73:5000

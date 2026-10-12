@@ -8,8 +8,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copier le code de l'application
-COPY app.py .
+# Copier toute l'application (app.py, services.yml, templates/)
+COPY . .
 
 # Port utilisé par l'application
 EXPOSE 5000
